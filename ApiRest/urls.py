@@ -24,3 +24,6 @@ urlpatterns = [
     url(r'^', include('formulario.urls')),
     url(r'^', include('seguridad.urls')),
 ]
+
+
+

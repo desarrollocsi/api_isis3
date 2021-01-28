@@ -17,20 +17,15 @@ class formulariod(models.Model):
     controltype     = models.CharField(max_length=50,null=False)
     type            = models.CharField(max_length=50,null=False)
     order           = models.IntegerField(null=True)
+    tabla            = models.CharField(max_length=50,null=True)
     def __str__(self):
         return self.key
 
-class options(models.Model):
-    idformulariod   = models.ForeignKey(formulariod,related_name='idformulariod_id',on_delete=models.CASCADE)
-    key             = models.CharField(max_length=5,null=False)
-    value           = models.CharField(max_length=50,null=False)
-    def __str__(self):
-        return self.value
 
-class optionsradio(models.Model):
-    idformulariod   = models.ForeignKey(formulariod,on_delete=models.CASCADE)
-    key             = models.CharField(max_length=5,null=False)
+class options(models.Model):
+    formulariod   = models.ForeignKey(formulariod,related_name='formulariod_id',on_delete=models.CASCADE)
+    key             = models.CharField(max_length=5,null=True,blank=True)
     value           = models.CharField(max_length=50,null=False)
     name            = models.CharField(max_length=100)
     def __str__(self):
-        return self.value
+        return self.name

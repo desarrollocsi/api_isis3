@@ -1,12 +1,15 @@
 from django.db import models
 
+from datetime import datetime
+
 # Create your models here.
 
 class Especialidades(models.Model):
-    es_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='es_codigo',null=False)
+    #  V-1 id = integer: JLT  | es_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='es_codigo',null=False)
+    es_codigo = models.CharField(primary_key=True, max_length=3)
     es_descripcion = models.CharField(max_length=40, blank=True, null=True)
     es_usuario = models.CharField(max_length=15, blank=True, null=True)
-    es_fecpro = models.DateTimeField(blank=True, null=True)
+    es_fecpro = models.DateTimeField(default=datetime.now(),blank=True, null=True)
     val_equivalencia = models.CharField(max_length=8, blank=True, null=True)
 
     class Meta:
@@ -22,12 +25,26 @@ class Especialidades(models.Model):
     #     return es_codigo
 
 class Consultorios(models.Model):
-    co_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='co_codigo')
+    # V-1 id = integer: JLT  | co_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='co_codigo')
+    co_codigo = models.CharField(primary_key=True, max_length=3,verbose_name="co_codigo")
     co_descorta = models.CharField(max_length=4, blank=True, null=True)
     co_descripcion = models.CharField(max_length=30, blank=True, null=True)
     co_tipo = models.IntegerField(blank=True, null=True)
     co_user = models.CharField(max_length=15, blank=True, null=True)
-    co_fecpro = models.DateTimeField(blank=True, null=True)
+    co_fecpro = models.DateTimeField(default=datetime.now(),blank=True, null=True)
+
+
+    # def save(self, **kwargs):
+    #     if (self.id is None):
+    #         super().save(*kwargs)
+    #     code_str = str(self.__AUTOCODE__ + self.id)
+    #     self.code = code_str
+    #     super().save(*kwargs)
+    # def get_auto_codigo(self, **kwargs):
+    #     # code = super(products_package, self).get_auto_code(**kwargs)
+    #     codigo_str ="021" #str(self.__AUTOCODE__ + self.id)
+    #     codigo = self.co_codigo = codigo_str
+    #     return codigo
     class Meta:
         managed = False
         db_table = 'consultorios'
@@ -35,11 +52,12 @@ class Consultorios(models.Model):
         return self.co_descripcion
 
 class Medicos(models.Model):
-    me_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='me_codigo',null=False)
+    # V-1 id = integer: JLT  |  me_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='me_codigo',null=False)
+    me_codigo = models.CharField(primary_key=True, max_length=3)
     me_colegio = models.CharField(max_length=5, blank=True, null=True)
     me_tipomedico = models.CharField(max_length=3, blank=True, null=True)
     me_nombres = models.CharField(max_length=120, blank=True, null=True)
-    me_fechareg = models.DateTimeField(blank=True, null=True)
+    me_fechareg = models.DateTimeField(default=datetime.now(),blank=True, null=True)
     me_estado = models.CharField(max_length=1, blank=True, null=True)
     me_especialidad = models.ForeignKey('Especialidades', models.DO_NOTHING, db_column='me_especialidad', blank=True, null=True)
     me_usuario = models.CharField(max_length=15, blank=True, null=True)
@@ -83,13 +101,14 @@ class Medicos(models.Model):
         return self.me_nombres
 
 class Turnos(models.Model):
-    tu_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='tu_codigo',null=False)
+    # V-1 id = integer: JLT  |tu_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='tu_codigo',null=False)
+    tu_codigo = models.CharField(primary_key=True, max_length=3)
     tu_horaini = models.CharField(max_length=5, blank=True, null=True)
     tu_horafin = models.CharField(max_length=5, blank=True, null=True)
     tu_tipoturno = models.CharField(max_length=1, blank=True, null=True)
     tu_horas = models.CharField(max_length=5, blank=True, null=True)
     tu_descripcion = models.CharField(max_length=40, blank=True, null=True)
-    tu_fechareg = models.DateTimeField(blank=True, null=True)
+    tu_fechareg = models.DateTimeField(default=datetime.now(),blank=True, null=True)
     tu_usuario = models.CharField(max_length=15, blank=True, null=True)
     tu_nhoraini = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     tu_nhorafin = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
@@ -124,6 +143,8 @@ class Cie10(models.Model):
     class Meta:
         managed = False
         db_table = 'cie10'
+    def __str__(self):
+        return self.codigo
 
 class Antecedentes(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -135,18 +156,18 @@ class Antecedentes(models.Model):
     updated_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'antecedentes'
 
 
-class AntecedentesActoMedico(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    idcita = models.IntegerField()
-    an_id = models.IntegerField()
-    an_valor = models.CharField(max_length=50, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
-    updated_at = models.DateTimeField(blank=True, null=True)
+# class AntecedentesActoMedico(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     idcita = models.IntegerField()
+#     an_id = models.IntegerField()
+#     an_valor = models.CharField(max_length=50, blank=True, null=True)
+#     created_at = models.DateTimeField(blank=True, null=True)
+#     updated_at = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'antecedentes_acto_medico'
+#     class Meta:
+#         managed = True
+#         db_table = 'antecedentes_acto_medico'

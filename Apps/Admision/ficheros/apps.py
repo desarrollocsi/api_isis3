@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class FicherosAdmConfig(AppConfig):
-    name = 'ficheros_adm'
+    name = 'ficheros'

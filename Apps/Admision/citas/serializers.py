@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from Apps.Admision.citas.models \
 	import Programacion,Citas,Historias,AntecedentesActoMedico,DiagnosticoActoMedico,ActoMedico
-from Apps.Admision.ficheros_adm.serializers \
+from Apps.Admision.ficheros.serializers \
 	import EspecialidadesSerializer,TurnosSerializer,\
 		MedicosSerializer,ConsultoriosSerializer,Cie10ListSerializer,AntecedentesListSerializer
 
@@ -19,8 +19,8 @@ class HistoriaSerializerList(serializers.ModelSerializer):
 class ProgramacionesListSerializer(serializers.ModelSerializer):
 	especialidad    = EspecialidadesSerializer(source="pr_servicio")
 	consultorio    	= ConsultoriosSerializer(source="pr_consultorio")
-	medico    		= MedicosSerializer(source="pr_medico")   
-	turno    		= TurnosSerializer(source="pr_turno")    
+	medico    		= MedicosSerializer(source="pr_medico")
+	turno    		= TurnosSerializer(source="pr_turno")
 	class Meta:
 		model = Programacion
 		fields = ['pr_numero' ,'medico' ,'consultorio' ,'especialidad' ,'turno',
@@ -58,7 +58,7 @@ class CitasListSerializer(serializers.ModelSerializer):
 		# 	if medico:
 		# 		return ci_medico.me_nombres
 		# 	return None
-class CitasSerializer(serializers.ModelSerializer): 
+class CitasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Citas
         fields= ['ci_idcita','ci_numhist','ci_programacion','ci_fechacita','ci_horatencion',

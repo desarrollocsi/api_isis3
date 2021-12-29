@@ -15,7 +15,7 @@ class Reporter(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
     class Meta:
-        managed = False
+        managed = True
         db_table = 'citas_reporter'
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
@@ -37,7 +37,7 @@ class Programacion(models.Model):
     pr_observ = models.CharField(max_length=250, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'programacion'
 
 
@@ -76,7 +76,7 @@ class AntecedentesActoMedico(models.Model):
     id = models.BigAutoField(primary_key=True)
     # idcita = models.IntegerField()
     # idcita = models.ForeignKey(Citas,models.DO_NOTHING, related_name='ante_idcita', db_column='idcita', blank=True, null=True)
-    actomedico = models.ForeignKey(ActoMedico, models.DO_NOTHING, related_name='antecedentesactomedico', db_column='actomedico_id', blank=False, null=False)
+    actomedico = models.ForeignKey(ActoMedico, models.DO_NOTHING, related_name='antecedentesactomedico', db_column='actomedico_id', blank=False, null=False, default=0)
     an_id = models.IntegerField()
     an_valor = models.CharField(max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True,auto_now_add=True)
@@ -112,7 +112,7 @@ class Citas(models.Model):
     ci_cuenta           = models.CharField(max_length=10,blank=True)
     ci_numhist          = models.ForeignKey(Historias,models.DO_NOTHING, related_name='ci_numhist', db_column='ci_numhist', blank=True, null=True) # models.CharField(max_length=10)
     # ci_numhist        = models.ForeignKey('Historias', on_delete=models.CASCADE, null=True)
-    # hc_numhist        = models.ForeignKey("Historias",verbose_name="Historia",on_delete=models.CASCADE, null=True, db_column='ci_numhist') 
+    # hc_numhist        = models.ForeignKey("Historias",verbose_name="Historia",on_delete=models.CASCADE, null=True, db_column='ci_numhist')
     # ci_numhist        = models.ForeignKey(Historias, related_name='citas', on_delete=models.CASCADE, null=True)
     ci_fechacita        = models.DateTimeField(blank=True, null=True)
     ci_servicio         = models.ForeignKey(Especialidades,models.DO_NOTHING,related_name='ci_servicio', db_column='ci_servicio', blank=True, null=True)
@@ -154,10 +154,10 @@ class Citas(models.Model):
     ci_codsx            = models.CharField(max_length=1, blank=True, null=True)
     ci_coded            = models.IntegerField(blank=True, null=True)
     ci_tel1             = models.CharField(max_length=15, blank=True, null=True)
-    ci_tel2             = models.CharField(max_length=15, blank=True, null=True)    
+    ci_tel2             = models.CharField(max_length=15, blank=True, null=True)
     actomedico_id       = models.ForeignKey(ActoMedico, models.DO_NOTHING, related_name='citasactomedico', db_column='actomedico_id', blank=True, null=True)
     class Meta:
-        managed = False
+        managed = True
         db_table = 'citas'
     def __str__(self):
         return f'{self.ci_cuenta} {self.ci_numhist}'
@@ -167,7 +167,7 @@ class Citas(models.Model):
 
 class PlantillaAgenda(models.Model):
     # co_codigo = models.AutoField(auto_created=True,primary_key=True, serialize=False, verbose_name='co_codigo')
-    orden = models.BigAutoField(primary_key=True)	
+    orden = models.BigAutoField(primary_key=True)
     hora = models.CharField(max_length=5, null=True,blank=True)
     horalleg = models.CharField(max_length=15, null=True,blank=True)
     historia = models.CharField(max_length=10, null=True,blank=True)

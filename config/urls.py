@@ -20,11 +20,16 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^', include('Apps.Seguridad.login.urls')), ## Rutas LOGIN :
+
     url(r'^', include('Apps.Admision.citas.urls')),
-    url(r'^', include('Apps.Admision.ficheros.urls')), ## Ficheros principales -> Especialidad,Turnos,etc
+    url(r'^', include('Apps.Admision.ficheros.urls')),
+    url(r'^', include('Apps.Admision.pacientes.urls')),
+
+    url(r'^', include('Apps.Seguridad.login.urls')),
     url(r'^', include('Apps.Seguridad.ficheros_seg.urls')),
     url(r'^', include('Apps.Seguridad.formulario.urls')),
+
+    url(r'^', include('Apps.Reclamos.urls')),
 ]
 
 

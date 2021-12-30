@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'Apps.Seguridad.login',
     'Apps.Seguridad.menus',
     'Apps.Seguridad.formulario',
+    # -----Reclamos ----------
+    'Apps.Reclamos'
 ]
 
 MIDDLEWARE = [

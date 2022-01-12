@@ -62,17 +62,17 @@ class Historias(models.Model):
     hc_fecnac_i3 = models.DateField(null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'historias'
     def __str__(self):
         return f'{self.hc_numhis} {self.hc_apepat}'
-    
+
     def getEdad(self):
         # return int((datetime.now().date() - datetime.strptime(self.hc_fecnac, '%d/%m/%Y').date()).days / 365.25)
         edad = relativedelta(datetime.now(), datetime.strptime(self.hc_fecnac, '%d/%m/%Y'))
         return f"{edad.years}a/ {edad.months}m/  {edad.days}d"
     def getNombreCompleto(self):
-        return  self.hc_apepat +' ' + self.hc_apemat + ', ' + self.hc_nombre 
+        return  self.hc_apepat +' ' + self.hc_apemat + ', ' + self.hc_nombre
     # @property
     # def age(self):
     #     return timezone.now().year - self.hc_fecnac.year
@@ -86,7 +86,7 @@ class TiposDeSangre(models.Model):
     ts_fecpro = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tipos_de_sangre'
 
 
@@ -99,7 +99,7 @@ class TipoDocumentosPersonales(models.Model):
     td_abv2 = models.CharField(max_length=80, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tipo_documentos_personales'
 
 
@@ -111,7 +111,7 @@ class Ocupaciones(models.Model):
     op_fechareg = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'ocupaciones'
 
 
@@ -123,7 +123,7 @@ class Paises(models.Model):
     pa_fechareg = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'paises'
 
 class EstadosCiviles(models.Model):
@@ -134,7 +134,7 @@ class EstadosCiviles(models.Model):
     ec_fechareg = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'estados_civiles'
 
 
@@ -146,7 +146,7 @@ class CondicionAsegurado(models.Model):
     cd_user = models.CharField(max_length=15, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'condicion_asegurado'
 
 
@@ -169,7 +169,7 @@ class PlanesHistoria(models.Model):
     pl_estado = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'planes_historia'
 
 
@@ -192,6 +192,6 @@ class TipoAsegurado(models.Model):
     ta_aseguradora = models.CharField(max_length=6, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tipo_asegurado'
         unique_together = (('ta_codi', 'ta_tarifa'),)

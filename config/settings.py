@@ -37,22 +37,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # 'rest_framework.authtoken',
     'knox',
-    'rest_framework',    
+    'rest_framework',
     'corsheaders',
     'django_filters',
     # APP's
     # -----Admision ----------
     'Apps.Admision.citas',
-    'Apps.Admision.ficheros_adm',
+    'Apps.Admision.ficheros',
+    'Apps.Admision.pacientes',
     # -----Seguridad ----------
     'Apps.Seguridad.ficheros_seg',
     'Apps.Seguridad.account',
     'Apps.Seguridad.login',
     'Apps.Seguridad.menus',
     'Apps.Seguridad.formulario',
+    # -----Reclamos ----------
+    'Apps.Reclamos'
 ]
 
 MIDDLEWARE = [
@@ -108,10 +111,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bd_isis',
+        'NAME': 'isis3',
         'USER': 'isisuser',
         'PASSWORD': 'csi20152',
-        'HOST': '192.168.0.45',
+        'HOST': '192.168.0.8',
         'PORT': '5432',
     }
 }
@@ -162,7 +165,7 @@ CORS_ORIGIN_WHITELIST = (
     # 'http://localhost:8080',
     # 'http://127.0.0.1:8080',
     # 'http://localhost:4200'
-    
+
 )
 AUTH_USER_MODEL = 'account.User'
 

@@ -13,7 +13,7 @@ class Especialidades(models.Model):
     val_equivalencia = models.CharField(max_length=8, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'especialidades'
     def __str__(self):
         return self.es_descripcion
@@ -46,7 +46,7 @@ class Consultorios(models.Model):
     #     codigo = self.co_codigo = codigo_str
     #     return codigo
     class Meta:
-        managed = False
+        managed = True
         db_table = 'consultorios'
     def __str__(self):
         return self.co_descripcion
@@ -94,7 +94,7 @@ class Medicos(models.Model):
     me_sexo = models.CharField(max_length=1, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'medicos'
 
     def __str__(self):
@@ -115,7 +115,7 @@ class Turnos(models.Model):
     tu_horario = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'turnos'
     def __str__(self):
         return self.tu_descripcion
@@ -141,7 +141,7 @@ class Cie10(models.Model):
     area = models.CharField(max_length=2, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'cie10'
     def __str__(self):
         return self.codigo

@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^', include('Apps.Seguridad.login.urls')), ## Rutas LOGIN :
     url(r'^', include('Apps.Admision.citas.urls')),
     url(r'^', include('Apps.Admision.ficheros.urls')), ## Ficheros principales -> Especialidad,Turnos,etc
+	url(r'^', include('Apps.Admision.pacientes.urls')),
     url(r'^', include('Apps.Seguridad.ficheros_seg.urls')),
     url(r'^', include('Apps.Seguridad.formulario.urls')),
 ]

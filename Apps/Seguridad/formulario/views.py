@@ -3,9 +3,6 @@ from rest_framework import viewsets
 from .models import formularioc
 from .serializers import formulariocSerializer,formularioSerializer
 
-from rest_framework import status,generics
-from django.http.response import JsonResponse
-
 # Create your views here.
 class formularioViewSet(viewsets.ModelViewSet):
     serializer_class = formularioSerializer

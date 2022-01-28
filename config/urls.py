@@ -22,18 +22,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     url(r'^', include('Apps.Admision.citas.urls')),
-<<<<<<< HEAD
     url(r'^', include('Apps.Admision.ficheros.urls')), ## Ficheros principales -> Especialidad,Turnos,etc
 	url(r'^', include('Apps.Admision.pacientes.urls')),
-=======
-    url(r'^', include('Apps.Admision.ficheros.urls')),
-    url(r'^', include('Apps.Admision.pacientes.urls')),
-
-    url(r'^', include('Apps.Seguridad.login.urls')),
->>>>>>> 76511b5a1b7dd95740fe3efa2411243595831c83
     url(r'^', include('Apps.Seguridad.ficheros_seg.urls')),
     url(r'^', include('Apps.Seguridad.formulario.urls')),
-
+    url(r'^', include('Apps.Seguridad.login.urls')),
     url(r'^', include('Apps.Reclamos.urls')),
 ]
 

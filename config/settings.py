@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework.authtoken',
     'knox',
     'rest_framework',
@@ -55,7 +54,9 @@ INSTALLED_APPS = [
     'Apps.Seguridad.menus',
     'Apps.Seguridad.formulario',
     # -----Reclamos ----------
-    'Apps.Reclamos'
+    'Apps.Reclamos',
+    # -----Calidad ----------
+    'Apps.Calidad',
 ]
 
 MIDDLEWARE = [

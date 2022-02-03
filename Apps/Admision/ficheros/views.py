@@ -1,3 +1,5 @@
+from django.db.models import Max
+
 from django.shortcuts import render
 from django.http.response import JsonResponse
 
@@ -84,12 +86,9 @@ def ESPECIALIDADES_GP(request):
     elif request.method == 'POST':
         request.data['codigo'] = f_generar_codigo("Especialidades","es_codigo",3)
         serializer = EspecialidadesSerializer(data=request.data)
-        # return Response({'status': True,'message': 'Registros grabados correctamente.',
-        # "data":request.data})
         if serializer.is_valid():
             serializer.save()
-            return Response({'status': True,'message': 'Registros grabados correctamente.'}, 
-            status=status.HTTP_201_CREATED)
+            return Response({'status': True,'message': 'Registros grabados correctamente.'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 """
 # ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -445,29 +444,9 @@ def OCUPACIONES_GP(request):
 
 
 
-
-
-
 ## ===========================  LISTA DE FUNCIONES DE PROCESO   =========================== ##
 
-def f_generar_codigo(NomObj,NomCamp,largo):
-    expresion = NomObj + ".objects.latest('"+NomCamp+"')."+NomCamp
-    # rows =  Consultorios.objects.latest('co_codigo').co_codigo
-    rows = eval(expresion) 
-    maximo = str(int(rows)+1)
-    return str(maximo.zfill(largo))
-
-    # ListReturn = list()
-    # for items in lista:
-    #     items[key] = valor
-    #     ListReturn.append(items)
-    # return ListReturn
-
-
-        # rows =  Consultorios.objects.latest('co_codigo').co_codigo
-        # # rows = Consultorios.objects.all().order_by('-co_codigo')[0]
-        # # rows = Consultorios.objects.aggregate(Max('co_codigo'))['co_codigo__max']
-        # maximo = str(int(rows)+1)
-        # print(maximo.zfill(3))
-        # request.data['codigo'] = rows
-        # return Response(request.data)
+def f_generar_codigo(nombreDelModel,nombreDelCampo,Longitud):
+    expresion = f"{nombreDelModel}.objects.aggregate({nombreDelCampo}=Max('{nombreDelCampo}'))['{nombreDelCampo}']"
+    rows = eval(expresion) or 0
+    return str(int(rows)+1).rjust(Longitud,'0')

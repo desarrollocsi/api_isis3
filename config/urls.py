@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^', include('Apps.Seguridad.login.urls')),
     url(r'^', include('Apps.Reclamos.urls')),
     url(r'^', include('Apps.Calidad.urls')),
+    url(r'^', include('Apps.Quirofanos.urls')),
 ]
 
 

@@ -20,8 +20,7 @@ class LoginAPI(generics.GenericAPIView):
         if UserSerializer(user,context = self.get_serializer_context()).data["is_superuser"]:
             Objmenus        = Menu.objects.all().order_by('nivel','nombre')
             serializermenu  = Menuserializer(Objmenus, many=True)
-            rol = [{ "nombre" : "SUPERADMIN",
-            "menu": serializermenu.data}]
+            rol = [{ "nombre" : "SUPERADMIN","menu": serializermenu.data}]
         else:
             idRol           = UserSerializer(user,context = self.get_serializer_context()).data["id_rol"]
             ObjRol          = Rol.objects.filter(id = idRol)

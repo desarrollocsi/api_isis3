@@ -10,6 +10,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from django.http.response import JsonResponse
 from rest_framework import status
+from rest_framework import filters
 from django.db.models import Q
 
 from django.db.models.functions import Concat
@@ -33,18 +34,30 @@ def consultacitas(request,id):
         return JsonResponse({'status':False,'message':'DNI es necesario'},status=status.HTTP_200_OK)
 
 
+# class AtencionesListView(generics.ListAPIView):
+#     serializer_class = CitasSerializer
+#     def get_queryset(self):
+#         queryset = Citas.objects.all()
+#         buscar  = self.request.query_params.get('search', None)
+#         if buscar is None:
+#             return Response({'status':False,'message':'No se identifico "search"'})
+#         else:
+#             queryset = queryset.annotate(search_name=Concat('ci_numhist__hc_apepat', Value(' '), 'ci_numhist__hc_apemat', Value(' '), 'ci_numhist__hc_nombre'))
+#             queryset = queryset.filter(Q(search_name__icontains=buscar) | Q(ci_numhist__hc_numhis__icontains = buscar ) )
+#         return queryset
+#             # queryset = queryset.filter(Q(hc_numhis = buscar) | Q(descripcion__icontains = buscar) )
+
+
 class AtencionesListView(generics.ListAPIView):
+    queryset = Citas.objects.all().filter(ci_estado='A')
     serializer_class = CitasSerializer
-    def get_queryset(self):
-        queryset = Citas.objects.all()
-        buscar  = self.request.query_params.get('search', None)
-        if buscar is None:
-            return Response({'status':False,'message':'No se identifico "search"'})
-        else:
-            queryset = queryset.annotate(search_name=Concat('ci_numhist__hc_apepat', Value(' '), 'ci_numhist__hc_apemat', Value(' '), 'ci_numhist__hc_nombre'))
-            queryset = queryset.filter(Q(search_name__icontains=buscar) | Q(ci_numhist__hc_numhis__icontains = buscar ) )
-        return queryset
-            # queryset = queryset.filter(Q(hc_numhis = buscar) | Q(descripcion__icontains = buscar) )
+    filter_backends = [filters.SearchFilter]
+    # search_fields = ['ci_numhist__hc_numhis__hc_apepat']
+    search_fields = ['ci_numhist__hc_numhis']
+
+
+
+
 
 
 

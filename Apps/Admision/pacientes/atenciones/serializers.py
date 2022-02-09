@@ -4,10 +4,6 @@ from ...ficheros.models import Especialidades,Medicos,Consultorios
 from ..models import *
 
 class CitasSerializer(serializers.ModelSerializer):
-    # especialidad    = EspecialidadesSerializer(source="ci_especialidad")
-    # medico          = MedicosSerializer(source="ci_medico")
-    # consultorio     = ConsultorioSerializer(source="ci_consultorio")
-
     medico 		= serializers.ReadOnlyField(source='ci_medico.me_nombres')
     consultorio = serializers.ReadOnlyField(source='ci_consultorio.co_descripcion')
     especialidad = serializers.ReadOnlyField(source='ci_especialidad.es_descripcion')

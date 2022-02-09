@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'Apps.Reclamos',
     # -----Calidad ----------
     'Apps.Calidad',
+    # ------CQ---------------
+    'Apps.Quirofanos',
 ]
 
 MIDDLEWARE = [

@@ -72,8 +72,8 @@ def PROGRAMACION_GP(request):
         return Response(serializer.data)
     elif request.method == 'POST':
         pfecha = request.data['pr_fecha'] 
-        pr_numero_max   = Programacion.objects.all().aggregate(Max('pr_numero'))['pr_numero__max']       
-        request.data['pr_numero']       = str(int(pr_numero_max)+1).rjust(8,'0')
+        pr_numero_max   = Programacion.objects.all().aggregate(Max('pr_numero'))['pr_numero__max']  or 0   
+        request.data['pr_numero'] = str(int(pr_numero_max) +1).rjust(8,'0')
         try: 
             ObjMedico       = Medicos.objects.get(me_codigo = request.data['pr_medico'])
         except Medicos.DoesNotExist: 

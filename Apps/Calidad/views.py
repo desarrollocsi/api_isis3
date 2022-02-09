@@ -12,7 +12,7 @@ def getIncidencia(idIncidencia):
 
 def parametsDynamic(paramets):
     PARAMETS_DYNAMIC = {
-        'ADMIN':{'fecha_registro__date':paramets['fecha']},
+        'SUPERADMIN':{'fecha_registro__date':paramets['fecha']},
         'USUARIO':{'fecha_registro__date':paramets['fecha'],'estado':1}
     }   
     return PARAMETS_DYNAMIC[paramets['rol']]

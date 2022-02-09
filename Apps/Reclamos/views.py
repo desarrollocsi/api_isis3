@@ -15,8 +15,8 @@ from knox.auth import TokenAuthentication
 # Create your views here.
 
 class EstadoList(generics.ListCreateAPIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
     serializer_class = EstadoSerializer
     def get_queryset(self):
         queryset = Estado.objects.all().order_by('er_cod')

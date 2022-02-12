@@ -90,6 +90,8 @@ def RECLAMO_GPPD(request, pk):
             return Response({'status': False,'message': 'Ya existe la trama del periodo, no puede actualizar los datos.'})
         else:
             objeto = get_object_or_404(Reclamos, re_cod=pk)
+            if not request.data['fecha_result']:
+                request.data['fecha_result'] = None
             serializer = ReclamosSerializer(objeto, data = request.data)
             if serializer.is_valid():
                 objReclamos = serializer.save()
@@ -103,36 +105,37 @@ def RECLAMO_GPPD(request, pk):
                         correlativo = correlativo + 1
                         ListReturn.append(items)
                     serializerMedidas = MedidasSerializer(data=ListReturn,many = True)
-                    if serializerMedidas.is_valid():
-                        serializerMedidas.save()
-                        return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_201_CREATED)
-                    else:
-                        return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
-                else:
+                if serializerMedidas.is_valid():
+                    serializerMedidas.save()
                     return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_201_CREATED)
-            return Response({'status': False,'message': serializer.errors},status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     elif request.method == 'POST':
         if Tramas.objects.filter(periodo =  request.data['periodo']).count() > 0:
             return Response({'status': False,'message': 'Ya existe la trama del periodo, no puede agregar más registros.'})
         else:
             del request.data['re_cod']
+            if not request.data['fecha_result']:
+                request.data['fecha_result'] = None
             serializer = ReclamosSerializer(data=request.data)
             if serializer.is_valid():
                 objReclamos = serializer.save()
-                ListReturn = list()
-                correlativo = 1
-                for items in request.data["medidas"]:
-                    items['re_cod'] = objReclamos.re_cod
-                    items['numero'] = correlativo
-                    correlativo = correlativo + 1
-                    ListReturn.append(items)
-                serializerMedidas = MedidasSerializer(data=ListReturn,many = True)
+                if request.data["resultado"] in [1,2]:
+                    ListReturn = list()
+                    correlativo = 1
+                    for items in request.data["medidas"]:
+                        items['re_cod'] = objReclamos.re_cod
+                        items['numero'] = correlativo
+                        correlativo = correlativo + 1
+                        ListReturn.append(items)
+                    serializerMedidas = MedidasSerializer(data=ListReturn,many = True)
                 if serializerMedidas.is_valid():
                     serializerMedidas.save()
                     return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # elif request.method == 'DELETE':
     #     objeto = Reclamos.objects.get(re_cod=pk)

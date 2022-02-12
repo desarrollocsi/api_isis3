@@ -105,12 +105,11 @@ def RECLAMO_GPPD(request, pk):
                         correlativo = correlativo + 1
                         ListReturn.append(items)
                     serializerMedidas = MedidasSerializer(data=ListReturn,many = True)
-                if serializerMedidas.is_valid():
-                    serializerMedidas.save()
-                    return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_201_CREATED)
-                else:
-                    return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
-
+                    if serializerMedidas.is_valid():
+                        serializerMedidas.save()
+                    else:
+                        return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_201_CREATED)
 
     elif request.method == 'POST':
         if Tramas.objects.filter(periodo =  request.data['periodo']).count() > 0:
@@ -131,11 +130,11 @@ def RECLAMO_GPPD(request, pk):
                         correlativo = correlativo + 1
                         ListReturn.append(items)
                     serializerMedidas = MedidasSerializer(data=ListReturn,many = True)
-                if serializerMedidas.is_valid():
-                    serializerMedidas.save()
-                    return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_400_BAD_REQUEST)
-                else:
-                    return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
+                    if serializerMedidas.is_valid():
+                        serializerMedidas.save()
+                    else:
+                        return Response(serializerMedidas.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'status': True,'message': 'Registro grabado correctamente.'}, status=status.HTTP_201_CREATED)
 
     # elif request.method == 'DELETE':
     #     objeto = Reclamos.objects.get(re_cod=pk)

@@ -112,7 +112,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bd_isis',
+        'NAME': 'isis3',
         'USER': 'isisuser',
         'PASSWORD': 'csi20152',
         'HOST': '192.168.0.8',

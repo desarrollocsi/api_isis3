@@ -1,5 +1,12 @@
 from django.db import models
+from Apps.Admision.ficheros.models import Especialidades,Medicos
 # Create your models here.
+
+class EmptyToNone(models.CharField):
+    def get_prep_value(self, value):
+        if value == '':
+            return None
+        return value
 
 class Etapa(models.Model):
     etr_cod = models.IntegerField(primary_key=True)
@@ -47,8 +54,9 @@ class Resultado(models.Model):
         managed = True
 
 class Servicio(models.Model):
-    sr_cod = models.CharField(primary_key=True, max_length=2)
+    sr_cod = models.AutoField(primary_key=True)
     sr_desc = models.CharField(max_length=100, blank=True, null=True)
+    sr_codsusalud = models.CharField(max_length=2, blank=True, null=True)
     class Meta:
         managed = True
 
@@ -60,44 +68,46 @@ class MotConcAnt(models.Model):
 
 class Reclamos(models.Model):
     re_cod = models.AutoField(primary_key=True)
-    periodo = models.CharField(max_length=6,blank=True, null=True)
-    cod_fisico = models.IntegerField(blank=True, null=True)
+    periodo = EmptyToNone(max_length=6,blank=True, null=True)
+    cod_fisico = EmptyToNone(max_length=15, blank=True, null=True)
     medio = models.IntegerField(blank=True, null=True)
     tipo_documento = models.ForeignKey(Tipo_documento, models.DO_NOTHING, related_name='tipo_documento', blank=True, null=True)
-    nro_documento = models.CharField(max_length=15, blank=True, null=True)
-    nombres = models.CharField(max_length=150, blank=True, null=True)
-    paterno = models.CharField(max_length=150, blank=True, null=True)
-    materno = models.CharField(max_length=150, blank=True, null=True)
+    nro_documento = EmptyToNone(max_length=15, blank=True, null=True)
+    nombres = EmptyToNone(max_length=150, blank=True, null=True)
+    paterno = EmptyToNone(max_length=150, blank=True, null=True)
+    materno = EmptyToNone(max_length=150, blank=True, null=True)
     tipo_documento_p = models.ForeignKey(Tipo_documento, models.DO_NOTHING, related_name='tipo_documento_p', blank=True, null=True)
-    nro_documento_p = models.CharField(max_length=15, blank=True, null=True)
-    nombres_p = models.CharField(max_length=150, blank=True, null=True)
-    paterno_p = models.CharField(max_length=150, blank=True, null=True)
-    materno_p = models.CharField(max_length=150, blank=True, null=True)
+    nro_documento_p = EmptyToNone(max_length=15, blank=True, null=True)
+    nombres_p = EmptyToNone(max_length=150, blank=True, null=True)
+    paterno_p = EmptyToNone(max_length=150, blank=True, null=True)
+    materno_p = EmptyToNone(max_length=150, blank=True, null=True)
     result_email = models.IntegerField(blank=True, null=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
-    domicilio = models.CharField(max_length=100, blank=True, null=True)
-    telefono = models.CharField(max_length=30, blank=True, null=True)
+    email = EmptyToNone(max_length=50, blank=True, null=True)
+    domicilio = EmptyToNone(max_length=100, blank=True, null=True)
+    telefono = EmptyToNone(max_length=30, blank=True, null=True)
     medio_recepcion = models.ForeignKey(MedioRecepcion, models.DO_NOTHING, blank=True, null=True)
     fecha = models.DateTimeField(blank=True, null=True)
-    detalle = models.CharField(max_length=1500, blank=True, null=True)
+    detalle = EmptyToNone(max_length=1500, blank=True, null=True)
     servicio = models.ForeignKey(Servicio, models.DO_NOTHING, blank=True, null=True)
+    especialidad = models.ForeignKey(Especialidades, models.DO_NOTHING, blank=True, null=True)
+    medico = models.ForeignKey(Medicos, models.DO_NOTHING, blank=True, null=True)
     compete = models.IntegerField(blank=True, null=True)
     clasificacion1 = models.ForeignKey(Clasificacion, models.DO_NOTHING, related_name='clasificacion1', blank=True, null=True)
     clasificacion2 = models.ForeignKey(Clasificacion, models.DO_NOTHING, related_name='clasificacion2', blank=True, null=True)
     clasificacion3 = models.ForeignKey(Clasificacion, models.DO_NOTHING, related_name='clasificacion3', blank=True, null=True)
     estado = models.ForeignKey(Estado, models.DO_NOTHING, blank=True, null=True)
-    codigo_original = models.CharField(max_length=15, blank=True, null=True)
+    codigo_original = EmptyToNone(max_length=15, blank=True, null=True)
     etapa = models.ForeignKey(Etapa, models.DO_NOTHING, blank=True, null=True)
     derivado_tipo = models.IntegerField(blank=True, null=True)
-    derivado_codigo = models.CharField(max_length=8, blank=True, null=True)
+    derivado_codigo = EmptyToNone(max_length=8, blank=True, null=True)
     resultado = models.ForeignKey(Resultado, models.DO_NOTHING, blank=True, null=True)
     mot_concl_antic = models.ForeignKey(MotConcAnt, models.DO_NOTHING, blank=True, null=True)
     fecha_result = models.DateField(blank=True, null=True)
     comunic_result = models.IntegerField(blank=True, null=True)
     fecha_notif_result = models.DateField(blank=True, null=True)
-    creador = models.CharField(max_length=20, blank=True, null=True)
+    creador = EmptyToNone(max_length=20, blank=True, null=True)
     creacion = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-    modificador = models.CharField(max_length=20, blank=True, null=True)
+    modificador = EmptyToNone(max_length=20, blank=True, null=True)
     modificacion = models.DateTimeField(blank=True, null=True, auto_now=True)
     class Meta:
         managed = True
@@ -117,7 +127,7 @@ class ProcesoMedida(models.Model):
 class Medidas(models.Model):
     re_cod = models.ForeignKey(Reclamos, models.CASCADE, related_name='reclamo_id')
     numero = models.IntegerField()
-    descripcion = models.CharField(max_length=500, blank=True, null=True)
+    descripcion = EmptyToNone(max_length=500, blank=True, null=True)
     naturaleza = models.ForeignKey(NaturalezaMedida, models.SET_NULL, blank=True, null=True)
     proceso = models.ForeignKey(ProcesoMedida, models.SET_NULL, blank=True, null=True)
     fecha_implem = models.DateField(blank=True, null=True)

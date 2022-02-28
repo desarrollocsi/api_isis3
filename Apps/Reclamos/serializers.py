@@ -67,6 +67,14 @@ class ReclamosSerializerData(serializers.ModelSerializer):
 		model = Reclamos
 		fields = '__all__'
 
+class ReclamoTramaSerializer(serializers.ModelSerializer):
+  fecha = serializers.DateTimeField(format="%Y-%m-%dT%H:%M")
+  medidas = MedidasSerializer(source='reclamo_id', many=True)
+  servicio = serializers.CharField(source='servicio.sr_codsusalud', allow_null=True)
+  class Meta:
+    model = Reclamos
+    fields = '__all__'
+
 class TramaSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Tramas

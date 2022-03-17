@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'Apps.Calidad',
     # ------CQ---------------
     'Apps.Quirofanos',
+    # ------Unilabs---------------
+    'Apps.Unilabs',
 ]
 
 MIDDLEWARE = [

@@ -57,10 +57,12 @@ INSTALLED_APPS = [
     'Apps.Reclamos',
     # -----Calidad ----------
     'Apps.Calidad',
-    # ------CQ---------------
+    # -----CQ----------------
     'Apps.Quirofanos',
-    # ------Unilabs---------------
+    # -----Unilabs-----------
     'Apps.Unilabs',
+    #------Ficheros Generales
+    'Apps.FicherosGenerales',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +119,8 @@ DATABASES = {
         'NAME': 'bd_isis',
         'USER': 'isisuser',
         'PASSWORD': 'csi20152',
-        'HOST': 'kronos.clinicasantaisabel.com',
+        #'HOST': 'kronos.clinicasantaisabel.com',
+        'HOST': '192.168.0.8',
         'PORT': '5432',
     }
 }

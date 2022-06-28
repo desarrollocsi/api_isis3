@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^', include('Apps.Calidad.urls')),
     url(r'^', include('Apps.Quirofanos.urls')),
     url(r'^', include('Apps.Unilabs.urls')),
+    url(r'^', include('Apps.FicherosGenerales.urls')),
 ]
 
 

@@ -6,3 +6,6 @@
 
 /site_ini
 /static
+
+#Virtual env
+venv
